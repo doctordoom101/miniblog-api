@@ -1,61 +1,80 @@
-# ====================================
-# GO BUILD FILES
-# ====================================
-# Binary executables (hasil `go build` / `go run`)
+# ==================================
+# Go Build Artifacts
+# ==================================
 /bin/
 /build/
 /dist/
+/out/
 /tmp/
+/vendor/
+
+# Executable binaries
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+main
+main.exe
+
+# Go test binaries
 *.test
-*.out
 
-# ====================================
-# DEPENDENCIES
-# ====================================
-# Go module cache
-vendor/
+# ==================================
+# Go Modules
+# ==================================
+go.work
+go.work.sum
 
-# ====================================
-# ENVIRONMENT & CONFIGURATION
-# ====================================
+# ==================================
+# Logs & temp
+# ==================================
+*.log
+*.tmp
+*.cache/
+.cache/
+*.swp
+*.swo
+
+# ==================================
+# Environment / Credentials
+# ==================================
 .env
-.env.*
-!env.example
+.env.local
+.env.development
+.env.production
+.env.test
 
-# ====================================
-# SYSTEM FILES
-# ====================================
-# macOS
+# ==================================
+# Docker
+# ==================================
+/docker-compose.override.yml
+/.docker/
+/.dockerignore
+
+# ==================================
+# IDE / Editor Config
+# ==================================
+.vscode/
+.idea/
+*.iml
+
+# JetBrains
+*.iws
+*.ipr
+out/
+
+# MacOS
 .DS_Store
 
 # Windows
 Thumbs.db
-ehthumbs.db
 desktop.ini
 
-# ====================================
-# IDE / EDITOR FILES
-# ====================================
-# VSCode
-.vscode/
-*.code-workspace
-
-# JetBrains (GoLand)
-.idea/
-
-# Others
-*.swp
-*.swo
-*.bak
-
-# ====================================
-# DOCKER
-# ====================================
-# Docker files
-*.log
-docker-compose.override.yml
+# ==================================
+# Database Volumes / Dumps
+# ==================================
+/pgdata/
+/data/
+*.sql
+*.sqlite

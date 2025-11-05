@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: go_blog_app
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - go-blog-network
+
+  db:
+    image: postgres:15
+    container_name: go_blog_db
+    restart: always
+    environment:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - go-blog-network
+
+networks:
+  go-blog-network:
+
+volumes:
+  pgdata:
