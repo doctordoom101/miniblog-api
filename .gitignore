@@ -1,0 +1,61 @@
+# ====================================
+# GO BUILD FILES
+# ====================================
+# Binary executables (hasil `go build` / `go run`)
+/bin/
+/build/
+/dist/
+/tmp/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# ====================================
+# DEPENDENCIES
+# ====================================
+# Go module cache
+vendor/
+
+# ====================================
+# ENVIRONMENT & CONFIGURATION
+# ====================================
+.env
+.env.*
+!env.example
+
+# ====================================
+# SYSTEM FILES
+# ====================================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ====================================
+# IDE / EDITOR FILES
+# ====================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains (GoLand)
+.idea/
+
+# Others
+*.swp
+*.swo
+*.bak
+
+# ====================================
+# DOCKER
+# ====================================
+# Docker files
+*.log
+docker-compose.override.yml
