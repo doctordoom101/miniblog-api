@@ -22,6 +22,19 @@ func main() {
 		return c.JSON(fiber.Map{"message": "Welcome to Go Blog API"})
 	})
 
+	app.Get("/api/v1/auth/test", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"status":  "success",
+			"message": "Auth test endpoint works!",
+		})
+	})
+
+	// Jalankan server di port dari .env
 	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // default port kalau belum ada di .env
+	}
+
+	log.Println("Server running on port:", port)
 	app.Listen(":" + port)
 }
