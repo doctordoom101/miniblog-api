@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go-miniblog/config"
 	"go-miniblog/internal/auth"
+	"go-miniblog/internal/middleware"
 	"go-miniblog/internal/post"
 
 	"log"
@@ -36,6 +37,22 @@ func main() {
 			"message": "Auth test endpoint works!",
 		})
 	})
+
+	// Auth Routes (Public)
+	api := app.Group("/api")
+	api.Post("/register", auth.RegisterHandler)
+	api.Post("/login", auth.LoginHandler)
+
+	// Post Routes (Public - Read Only)
+	api.Get("/posts", post.GetAllPostsHandler)
+	api.Get("/posts/:id", post.GetPostByIDHandler)
+	api.Get("/users/:user_id/posts", post.GetPostsByUserHandler)
+
+	// Protected Routes (Require Authentication)
+	protected := api.Group("", middleware.AuthRequired())
+	protected.Post("/posts", post.CreatePostHandler)
+	protected.Put("/posts/:id", post.UpdatePostHandler)
+	protected.Delete("/posts/:id", post.DeletePostHandler)
 
 	// Jalankan server di port dari .env
 	port := os.Getenv("PORT")

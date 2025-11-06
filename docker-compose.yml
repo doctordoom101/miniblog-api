@@ -13,6 +13,9 @@ services:
       - db
     networks:
       - go-blog-network
+          volumes:
+      - .:/app
+    restart: unless-stopped
 
   db:
     image: postgres:15
@@ -26,6 +29,11 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - go-blog-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   go-blog-network:
