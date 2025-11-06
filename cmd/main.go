@@ -1,7 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"go-miniblog/config"
+	"go-miniblog/internal/auth"
+	"go-miniblog/internal/post"
+
 	"log"
 	"os"
 
@@ -17,6 +21,10 @@ func main() {
 
 	app := fiber.New()
 	config.InitDB()
+	if err := config.DB.AutoMigrate(&auth.User{}, &post.Post{}); err != nil {
+		log.Fatal("❌ Migration failed:", err)
+	}
+	fmt.Println("✅ Database migrated")
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"message": "Welcome to Go Blog API"})
@@ -31,9 +39,6 @@ func main() {
 
 	// Jalankan server di port dari .env
 	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080" // default port kalau belum ada di .env
-	}
 
 	log.Println("Server running on port:", port)
 	app.Listen(":" + port)

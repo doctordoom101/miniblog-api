@@ -3,7 +3,6 @@ package auth
 import (
 	"errors"
 	"go-miniblog/config"
-	"go-miniblog/internal/models"
 	"go-miniblog/pkg/utils"
 
 	"gorm.io/gorm"
@@ -21,12 +20,12 @@ type LoginRequest struct {
 }
 
 type AuthResponse struct {
-	Token string      `json:"token"`
-	User  models.User `json:"user"`
+	Token string `json:"token"`
+	User  User   `json:"user"`
 }
 
 func Register(req RegisterRequest) (*AuthResponse, error) {
-	var existingUser models.User
+	var existingUser User
 	if err := config.DB.Where("email = ?", req.Email).First(&existingUser).Error; err == nil {
 		return nil, errors.New("email already registered")
 	}
@@ -36,7 +35,7 @@ func Register(req RegisterRequest) (*AuthResponse, error) {
 		return nil, err
 	}
 
-	user := models.User{
+	user := User{
 		Name:     req.Name,
 		Email:    req.Email,
 		Password: hashedPassword,
@@ -58,7 +57,7 @@ func Register(req RegisterRequest) (*AuthResponse, error) {
 }
 
 func Login(req LoginRequest) (*AuthResponse, error) {
-	var user models.User
+	var user User
 	if err := config.DB.Where("email = ?", req.Email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("invalid email or password")
