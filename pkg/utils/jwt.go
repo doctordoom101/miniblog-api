@@ -7,8 +7,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-// var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
-
 func GenerateToken(userID uint) (string, error) {
 	jwtSecret := []byte(os.Getenv("JWT_SECRET"))
 
